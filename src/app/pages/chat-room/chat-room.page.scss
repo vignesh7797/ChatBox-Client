@@ -1,0 +1,58 @@
+.chatRoom-header {
+  .profilePic {
+
+    width              : 40px;
+    height             : 40px;
+    aspect-ratio       : 1/1;
+    background-size    : cover;
+    background-repeat  : no-repeat;
+    background-position: center;
+    border-radius      : 50%;
+
+    .badge {
+      background   : var(--ion-color-success);
+      position     : relative;
+      padding      : 3px;
+      width        : 10px;
+      aspect-ratio : 1/1;
+      border-radius: 50%;
+      top          : 70%;
+      left         : 35%;
+    }
+  }
+
+  .profileName {
+    max-width    : 100%;
+    white-space  : nowrap;
+    overflow     : hidden;
+    text-overflow: ellipsis;
+    font-weight  : 700;
+  }
+
+  .status {
+    font-size: 10px;
+    opacity  : 0.6;
+  }
+
+
+  ion-button {
+    --padding-start: 7px !important;
+    --padding-end  : 7px !important;
+    margin         : 38% 0;
+  }
+
+  ion-back-button {
+    --color: var(--primary) !important;
+  }
+
+  ion-thumbnail {
+    --border-radius: 14px;
+    --size         : 20px !important;
+    width          : 40px;
+    height         : 40px;
+  }
+
+  ion-item {
+    width: 100% !important;
+  }
+}

@@ -1,0 +1,117 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="row m-0 p-0 home-header">
+      <div class="col-5 d-flex align-items-center" *ngIf="!isSearch">
+        <img src="assets/images/logo.svg" alt="" class="header-logo" />
+        <h1 class="title">ChatBox</h1>
+      </div>
+
+      <div
+        class="d-flex justify-content-end"
+        [ngClass]="isSearch ? 'col-12':'col-5'"
+      >
+        <ion-button
+          fill="clear"
+          shape="round"
+          (click)="isSearch = !isSearch"
+          [ngClass]="isSearch ? 'toLeft':''"
+        >
+          <ion-icon [name]="isSearch ? 'arrow-back' : 'search'"></ion-icon>
+        </ion-button>
+        <div class="form-group" *ngIf="isSearch">
+          <input
+            type="text"
+            class="chatBox-input"
+            placeholder="search contacts.."
+            autofocus
+          />
+        </div>
+        <ion-button fill="clear" shape="round" id="popover-button">
+          <ion-icon name="settings-sharp"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="home-content">
+    <ion-list>
+      <ion-item
+        *ngFor="let user of usersList; let i=index"
+        button
+        (click)="openChatRoom()"
+      >
+        <ion-thumbnail id="open-dp-modal" expand="block" slot="start">
+          <img
+            (click)="openDpModal('https://picsum.photos/id/'+ (i+200) +'/200/200', $event); dpModal.present()"
+            alt="Silhouette of a person's head"
+            [src]="'https://picsum.photos/id/'+ (i+200) +'/200/200'"
+            onerror="this.onerror = null; this.src = 'https://ionicframework.com/docs/img/demos/avatar.svg'"
+          />
+        </ion-thumbnail>
+
+        <ion-label>
+          <h3>U{{i+1}} Heading</h3>
+          <p>Paragraph</p>
+        </ion-label>
+
+        <ion-badge slot="end" mode="ios">2</ion-badge>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-popover trigger="popover-button" [dismissOnSelect]="true">
+  <ng-template>
+    <ion-content>
+      <ion-list>
+        <ion-item [button]="true" [detail]="false" routerLink="/profile">Profile</ion-item>
+        <ion-item [button]="true" [detail]="false">Option 2</ion-item>
+        <ion-item [button]="true" id="nested-trigger">More options...</ion-item>
+
+        <ion-popover
+          trigger="nested-trigger"
+          [dismissOnSelect]="true"
+          side="end"
+        >
+          <ng-template>
+            <ion-content>
+              <ion-list>
+                <ion-item [button]="true" [detail]="false"
+                  >Nested option</ion-item
+                >
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button>
+    <ion-icon name="chatbubble-ellipses-sharp"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-modal id="dp-modal" #dpModal trigger="open-dp-modal">
+  <ng-template>
+    <div
+      class="dp-banner"
+      [ngStyle]="{'background-image' : dpObj.src ? 'url('+dpObj.src+')' : 'url(https://ionicframework.com/docs/img/demos/avatar.svg)'}"
+    >
+      <p class="dp-name">{{dpObj.name}}</p>
+    </div>
+    <div class="dp-options">
+      <ion-button fill="clear" shape="round">
+        <ion-icon name="chatbox-ellipses-sharp"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" shape="round">
+        <ion-icon name="information-circle-sharp"></ion-icon>
+      </ion-button>
+    </div>
+  </ng-template>
+</ion-modal>

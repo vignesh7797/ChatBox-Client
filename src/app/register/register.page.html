@@ -1,0 +1,382 @@
+<ion-content>
+  <form [formGroup]="registerForm" >
+    <ion-slides
+      [pager]="true"
+      #swiperRef
+      (ionSlideDidChange)="onSlideDone($event)"
+    >
+      <!-- Welcome Page -->
+      <ion-slide>
+        <div class="swiper-content">
+          <div class="banner">
+            <img src="assets/images/banner1.svg" alt="" class="banner-img" />
+
+            <div class="banner-content">
+              <h2>Welcome to ChatBox!</h2>
+              <p>
+                The best messanger and chat app of the century to make your day
+                great.
+              </p>
+            </div>
+
+            <button
+              class="primary-btn"
+              type="button"
+              (click)="swiperRef.slideNext()"
+            >
+              <ion-ripple-effect></ion-ripple-effect>
+              Let's Continue
+            </button>
+          </div>
+        </div>
+      </ion-slide>
+
+      <!-- Login or SignUp -->
+      <ion-slide>
+        <div class="swiper-content">
+          <div class="banner">
+            <img src="assets/images/logo.svg" alt="" class="banner-logo" />
+
+            <!-- <div class="banner-content">
+              <h2>Welcome to ChatBox!</h2>
+              <p>
+                The best messanger and chat app of the century to make your day
+                great.
+              </p>
+            </div> -->
+
+           <div>
+            <button
+            class="primary-btn"
+            type="button"
+            (click)="swiperRef.slideNext()"
+          >
+            <ion-ripple-effect></ion-ripple-effect>
+            Create an Account
+          </button>
+
+          <p class="text-center my-3">
+            Alreay have account?
+          </p>
+
+          <button
+            class="primary-btn"
+            type="button"
+            (click)="swiperRef.slideTo(9)"
+          >
+            <ion-ripple-effect></ion-ripple-effect>
+            LogIn
+          </button>
+           </div>
+
+
+
+          </div>
+        </div>
+      </ion-slide>
+
+      <!-- Email Page -->
+
+      <ion-slide>
+        <div class="swiper-content">
+          <div class="banner">
+            <img src="assets/images/logo.svg" alt="" class="banner-logo" />
+            <h2>Create New Account</h2>
+
+            <div class="form-group">
+              <input
+                type="email"
+                class="chatBox-input"
+                formControlName="email"
+                placeholder="example@email.com"
+              />
+              <p
+                class="error"
+                [hidden]="!registerForm.controls['email'].errors && registerForm.controls['email'].dirty"
+              >
+                Please Enter Valid Email Id
+              </p>
+            </div>
+
+            <button
+              class="primary-btn"
+              type="button"
+              (click)="changeNxt('email')"
+              [disabled]="registerForm.controls['email'].errors"
+            >
+              <ion-ripple-effect></ion-ripple-effect>
+              Create
+            </button>
+          </div>
+        </div>
+      </ion-slide>
+
+      <!-- OTP Page -->
+
+      <ion-slide>
+        <div class="swiper-content">
+          <div class="banner">
+            <img src="assets/images/logo.svg" alt="" class="banner-logo" />
+            <h2>Verify Email</h2>
+            <div class="form-group">
+              <input
+                type="number"
+                class="chatBox-input"
+                formControlName="otp"
+                placeholder="####"
+                maxlength="4"
+                (keyup)="verifyOTP()"
+                style="letter-spacing: 15px"
+              />
+              <p
+                class="error"
+                [hidden]="!registerForm.controls['otp'].errors && registerForm.controls['otp'].dirty"
+              >
+                Please Enter Valid OTP sent you in mail
+              </p>
+
+              <a *ngIf="registerForm.controls['email'].value" class="resend mt-3" (click)="changeNxt('email')">Resend OTP</a>
+            </div>
+
+
+            <button
+              class="primary-btn"
+              type="button"
+              (click)="changeNxt('otp')"
+              [disabled]="registerForm.controls['otp'].errors"
+            >
+              <ion-ripple-effect></ion-ripple-effect>
+              Verify
+            </button>
+          </div>
+        </div>
+      </ion-slide>
+
+      <!-- Password -->
+
+      <ion-slide>
+        <div class="swiper-content">
+          <div class="banner">
+            <img src="assets/images/logo.svg" alt="" class="banner-logo" />
+            <h2>Create Password</h2>
+
+            <div class="form-group">
+              <input
+                [type]="showPass ? 'text' : 'password'"
+                class="chatBox-input"
+                formControlName="password"
+                placeholder="enter password"
+              />
+
+              <input
+                [type]="showPass ? 'text' : 'password'"
+                class="chatBox-input mt-4"
+                placeholder="confirm password"
+                (keyup)="onConfirmPassword(confirm?.value)"
+                #confirm
+              />
+              <p class="error" [hidden]="isConfirm">
+                Both fields are should be match.
+              </p>
+
+              <ion-label class="mt-3 d-flex align-items-center">
+                <ion-checkbox slot="start" (ionChange)="showPass = !showPass">
+                </ion-checkbox>
+                <p class="ms-2">Show Password</p>
+              </ion-label>
+            </div>
+
+            <button
+              class="primary-btn"
+              type="button"
+              (click)="changeNxt('password')"
+              [disabled]="!isConfirm"
+            >
+              <ion-ripple-effect></ion-ripple-effect>
+              Verify
+            </button>
+          </div>
+        </div>
+      </ion-slide>
+
+      <!-- Name Page -->
+      <ion-slide>
+        <div class="swiper-content">
+          <div class="banner">
+            <img src="assets/images/logo.svg" alt="" class="banner-logo" />
+            <h2>Enter Your Name</h2>
+
+            <div class="w-100">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="chatBox-input"
+                  formControlName="firstName"
+                  placeholder="First Name"
+                />
+                <p
+                  class="error"
+                  [hidden]="!registerForm.controls['firstName'].errors || !registerForm.controls['firstName'].dirty"
+                >
+                  Please Enter Min. 4 to Max. 25 characters
+                </p>
+              </div>
+
+              <div class="form-group mt-4">
+                <input
+                  type="text"
+                  class="chatBox-input"
+                  formControlName="lastName"
+                  placeholder="Last Name"
+                />
+                <p
+                  class="error"
+                  [hidden]="!registerForm.controls['lastName'].errors || !registerForm.controls['lastName'].dirty"
+                >
+                  Please Enter Min. 4 to Max. 25 characters
+                </p>
+              </div>
+            </div>
+
+            <button
+              class="primary-btn"
+              type="button"
+              (click)="changeNxt('firstName')"
+              [disabled]="registerForm.controls['firstName'].errors || registerForm.controls['lastName'].errors"
+            >
+              <ion-ripple-effect></ion-ripple-effect>
+              Next
+            </button>
+          </div>
+        </div>
+      </ion-slide>
+
+      <!-- username Page -->
+
+      <ion-slide>
+        <div class="swiper-content">
+          <div class="banner">
+            <img src="assets/images/logo.svg" alt="" class="banner-logo" />
+            <h2>Create New User Name</h2>
+
+            <div class="form-group">
+              <input
+                type="text"
+                class="chatBox-input"
+                formControlName="username"
+                placeholder="username"
+              />
+              <p
+                class="error"
+                [hidden]="!registerForm.controls['username'].errors || !registerForm.controls['username'].dirty"
+              >
+                Please Enter unique user name
+              </p>
+            </div>
+
+            <button
+              class="primary-btn"
+              type="button"
+              (click)="changeNxt('username')"
+              [disabled]="registerForm.controls['username'].errors || registerForm.controls['username'].errors"
+            >
+              <ion-ripple-effect></ion-ripple-effect>
+              Next
+            </button>
+          </div>
+        </div>
+      </ion-slide>
+
+      <!-- Profile Pic -->
+      <ion-slide>
+        <div class="swiper-content">
+          <div class="banner">
+            <img src="assets/images/logo.svg" alt="" class="banner-logo" />
+            <h2>Add Your Profile Pic</h2>
+
+            <label for="file">
+              <div
+                class="profilePic"
+                [ngStyle]="{'background-image' : imgSRC ? 'url('+imgSRC+')' : ''}"
+              >
+                <div class="badge">
+                  <ion-icon name="pencil-outline"></ion-icon>
+                </div>
+              </div>
+              <input
+                type="file"
+                name=""
+                id="file"
+                accept="image/x-png,image/gif,image/jpeg"
+                [hidden]="true"
+                (change)="onAddImage($event)"
+              />
+            </label>
+
+            <button
+              class="primary-btn"
+              type="button"
+              [disabled]="registerForm.errors"
+              (click)="onSubmit()"
+            >
+              <ion-ripple-effect></ion-ripple-effect>
+              Complete
+            </button>
+          </div>
+        </div>
+      </ion-slide>
+
+      <!-- Log In -->
+
+      <ion-slide>
+        <div class="swiper-content">
+          <div class="banner">
+            <img src="assets/images/logo.svg" alt="" class="banner-logo" />
+            <h2>Add Your Profile Pic</h2>
+
+              <div class="form-group">
+                <input
+                  type="email"
+                  class="chatBox-input"
+                  formControlName="email"
+                  placeholder="example@email.com"
+                />
+                <p
+                  class="error"
+                  *ngIf="registerForm.controls['email'].errors"
+                >
+                  Please Enter Valid Email Id
+                </p>
+
+                <input
+                  [type]="showPass ? 'text' : 'password'"
+                  class="chatBox-input mt-3"
+                  formControlName="password"
+                  placeholder="enter password"
+                />
+                <!-- <p class="error" [hidden]="isConfirm">
+                  Both fields are should be match.
+                </p> -->
+
+                <ion-label class="mt-3 d-flex align-items-center">
+                  <ion-checkbox slot="start" (ionChange)="showPass = !showPass">
+                  </ion-checkbox>
+                  <p class="ms-2">Show Password</p>
+                </ion-label>
+              </div>
+
+            <button
+              class="primary-btn"
+              type="button"
+              [disabled]="!registerForm.controls['email'].value || !registerForm.controls['password'].value"
+              (click)="onLogIn()"
+            >
+              <ion-ripple-effect></ion-ripple-effect>
+              LogIn
+            </button>
+          </div>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </form>
+</ion-content>

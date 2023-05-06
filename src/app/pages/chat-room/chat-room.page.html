@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="row justify-content-between chatRoom-header">
+      <ion-buttons class="col-2" slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+
+      <div class="col-8 d-flex align-items-center justify-content-start">
+        <ion-item button>
+          <ion-thumbnail id="open-dp-modal" expand="block" slot="start">
+            <img
+              alt="Profile Pic"
+              [src]="'https://picsum.photos/id/201/200/200'"
+              onerror="this.onerror = null; this.src = 'https://ionicframework.com/docs/img/demos/avatar.svg'"
+            />
+          </ion-thumbnail>
+
+          <ion-label>
+            <h2 class="profileName">Vigneshwaran Panneerselvam</h2>
+            <p class="status">Online</p>
+          </ion-label>
+        </ion-item>
+      </div>
+
+      <div class="col-2">
+        <ion-button fill="clear" shape="round" id="popover-menu">
+          <ion-icon name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content> </ion-content>
+
+<ion-popover trigger="popover-menu" [dismissOnSelect]="true">
+  <ng-template>
+    <ion-content>
+      <ion-list>
+        <ion-item [button]="true" [detail]="false">Option 1</ion-item>
+        <ion-item [button]="true" [detail]="false">Option 2</ion-item>
+        <ion-item [button]="true" [detail]="false">Option 3</ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>
